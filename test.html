@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>energenieApi</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      body {
+        padding-top: 5px;
+        background-color: #eee;
+      }
+      .btn-group-vertical {
+        width: 100%
+      }
+      .btn {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      hr {
+        -moz-border-bottom-colors: none;
+        -moz-border-image: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+        border-style: solid none;
+        border-width: 1px 0;
+        margin: 5px 0;
+      }
+    </style>
+    <script type="text/javascript">
+      function socketAction(socketNumber, socketState) {
+          $.ajax({
+              url:'http://10.0.0.5/socket/' + socketNumber + '/' + socketState,
+              beforeSend: function (response) {
+                  $('#output').html('Changing state for ' + socketNumber + ' to ' + socketState + '...');
+              },
+              complete: function (response) {
+                  $('#output').html(response.responseText);
+              },
+              error: function (response) {
+                  $('#output').html(response.responseText);
+              },
+          });
+          return false;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+        <h3>energenieApi <small>socket control</small></h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well" id="output">Click a button...</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="btn-group-vertical" role="group" aria-label="...">
+            <a class="btn btn-lg btn-success" href="#" onclick="return socketAction('all','on');">All on</a>
+            <a class="btn btn-lg btn-danger" href="#" onclick="return socketAction('all','off');">All off</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="btn-group-vertical" role="group" aria-label="...">
+            <a class="btn btn-lg btn-success" href="#" onclick="return socketAction('1','on');">1 on</a>
+            <a class="btn btn-lg btn-success" href="#" onclick="return socketAction('2','on');">2 on</a>
+            <a class="btn btn-lg btn-success" href="#" onclick="return socketAction('3','on');">3 on</a>
+            <a class="btn btn-lg btn-success" href="#" onclick="return socketAction('4','on');">4 on</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="btn-group-vertical" role="group" aria-label="...">
+            <a class="btn btn-lg btn-danger" href="#" onclick="return socketAction('1','off');">1 off</a>
+            <a class="btn btn-lg btn-danger" href="#" onclick="return socketAction('2','off');">2 off</a>
+            <a class="btn btn-lg btn-danger" href="#" onclick="return socketAction('3','off');">3 off</a>
+            <a class="btn btn-lg btn-danger" href="#" onclick="return socketAction('4','off');">4 off</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
